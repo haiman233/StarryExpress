@@ -1,0 +1,19 @@
+{
+    "providers": [
+        {
+            "type": "reference",
+            "id": "starexpress:include/space_guidebook_heading"
+        },
+        {
+            "type": "reference",
+            "id": "starexpress:include/default_guidebook_heading",
+            "filter": {
+                "uniform": false
+            }
+        },
+        {
+            "type": "reference",
+            "id": "starexpress:include/unifont_guidebook_heading"
+        }
+    ]
+}

@@ -1,3 +1,30 @@
 {
-  "block.starexpress.stargazer_plush": "Stargazer Plush"
+  "block.starexpress.stargazer_plush": "Stargazer Plush",
+
+  "guidebook.tooltip.open": "Open Guidebook",
+  "guidebook.category.roles": "Roles",
+      "guidebook.category.roles.good": "Good Roles",
+      "guidebook.category.roles.neutral": "Neutral Roles",
+      "guidebook.category.roles.evil": "Evil Roles",
+  "guidebook.category.modifiers": "Modifiers",
+
+  "guidebook.role.wathe:civilian": "Civilian",
+      "guidebook.role.description.wathe:civilian": "A mere bystander, the Civilian has arrived on the train unarmed. This role has absolutely nothing in its arsenal.",
+  "guidebook.role.wathe:vigilante": "Vigilante",
+      "guidebook.role.description.wathe:vigilante": "Armed with a gun, even upon first boarding the train. Their sole mission is to rid the Harpy Express of anyone with malicious intentions.",
+  "guidebook.role.wathe:killer": "Killer",
+      "guidebook.role.description.wathe:killer": "A passenger with the intent of ridding the world of everyone who isn't like them. Their sole mission is to kill every non-killer player.\n\nMaybe they have daddy issues.",
+
+  "guidebook.role.stupidexpress:amnesiac": "Amnesiac",
+      "guidebook.role.description.stupidexpress:amnesiac": "N/A",
+  "guidebook.role.stupidexpress:arsonist": "Arsonist",
+      "guidebook.role.description.stupidexpress:arsonist": "N/A",
+  "guidebook.role.stupidexpress:necromancer": "Necromancer",
+      "guidebook.role.description.stupidexpress:necromancer": "N/A",
+  "guidebook.role.stupidexpress:avaricious": "Avaricious",
+      "guidebook.role.description.stupidexpress:avaricious": "N/A",
+  "guidebook.role.stupidexpress:lovers": "Lovers",
+      "guidebook.role.description.stupidexpress:lovers": "N/A",
+  "guidebook.role.stupidexpress:allergic": "Allergic",
+      "guidebook.role.description.stupidexpress:allergic": "N/A"
 }
