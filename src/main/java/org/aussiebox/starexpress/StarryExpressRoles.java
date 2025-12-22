@@ -25,9 +25,7 @@ public class StarryExpressRoles {
     ));
 
     public static void init() {
-
         Harpymodloader.setRoleMaximum(STARSTRUCK, 1);
-
     }
 
     public static Role registerRole(Role role) {

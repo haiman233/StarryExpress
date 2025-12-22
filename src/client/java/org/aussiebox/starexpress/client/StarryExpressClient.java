@@ -1,19 +1,25 @@
 package org.aussiebox.starexpress.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import dev.doctor4t.wathe.api.Role;
+import dev.doctor4t.wathe.cca.GameWorldComponent;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import org.agmas.noellesroles.client.NoellesrolesClient;
 import org.aussiebox.starexpress.StarryExpress;
+import org.aussiebox.starexpress.StarryExpressRoles;
 import org.aussiebox.starexpress.block.ModBlocks;
 import org.aussiebox.starexpress.block.entity.ModBlockEntities;
 import org.aussiebox.starexpress.client.render.blockentity.PlushBlockEntityRenderer;
+import org.aussiebox.starexpress.packet.AbilityC2SPacket;
 import org.lwjgl.glfw.GLFW;
 
 public class StarryExpressClient implements ClientModInitializer {
@@ -32,7 +38,24 @@ public class StarryExpressClient implements ClientModInitializer {
         }
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (abilityBind.isDown()) {
+                client.execute(() -> {
+                    if (Minecraft.getInstance().player == null) return;
+                    GameWorldComponent gameWorldComponent = GameWorldComponent.KEY.get(Minecraft.getInstance().player.level());
 
+                    boolean sendPacket = false;
+                    Role[] rolesWithAbility = new Role[] {
+                            StarryExpressRoles.STARSTRUCK
+                    };
+
+                    for (Role role : rolesWithAbility) {
+                        if (gameWorldComponent.isRole(Minecraft.getInstance().player, role)) sendPacket = true;
+                    }
+
+                    if (!sendPacket) return;
+                    ClientPlayNetworking.send(new AbilityC2SPacket());
+                });
+            }
         });
     }
 }

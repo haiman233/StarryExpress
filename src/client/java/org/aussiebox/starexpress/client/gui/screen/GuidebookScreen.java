@@ -14,7 +14,9 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import org.agmas.noellesroles.Noellesroles;
 import org.aussiebox.starexpress.StarryExpress;
+import org.aussiebox.starexpress.StarryExpressRoles;
 import org.aussiebox.starexpress.util.RoleInfo;
 import org.aussiebox.starexpress.util.RoleInfo.GuidebookEntry;
 import org.aussiebox.starexpress.util.RoleInfo.RoleType;
@@ -37,14 +39,50 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
         roleInfo.putIfAbsent("wathe:civilian", new RoleInfo(RoleType.ROLE, WatheRoles.CIVILIAN.color(), GuidebookEntry.GOOD));
         roleInfo.putIfAbsent("wathe:vigilante", new RoleInfo(RoleType.ROLE, WatheRoles.VIGILANTE.color(), GuidebookEntry.GOOD));
         roleInfo.putIfAbsent("wathe:killer", new RoleInfo(RoleType.ROLE, WatheRoles.KILLER.color(), GuidebookEntry.EVIL));
+
+        roleInfo.putIfAbsent("starexpress:starstruck", new RoleInfo(RoleType.ROLE, StarryExpressRoles.STARSTRUCK.color(), GuidebookEntry.GOOD));
+
+        if (FabricLoader.getInstance().isModLoaded("noellesroles")) {
+            roleInfo.putIfAbsent("noellesroles:jester", new RoleInfo(RoleType.ROLE, Noellesroles.JESTER.color(), GuidebookEntry.EVIL));
+            roleInfo.putIfAbsent("noellesroles:executioner", new RoleInfo(RoleType.ROLE, Noellesroles.EXECUTIONER.color(), GuidebookEntry.EVIL));
+            roleInfo.putIfAbsent("noellesroles:morphling", new RoleInfo(RoleType.ROLE, Noellesroles.MORPHLING.color(), GuidebookEntry.EVIL));
+            roleInfo.putIfAbsent("noellesroles:phantom", new RoleInfo(RoleType.ROLE, Noellesroles.PHANTOM.color(), GuidebookEntry.EVIL));
+            roleInfo.putIfAbsent("noellesroles:swapper", new RoleInfo(RoleType.ROLE, Noellesroles.SWAPPER.color(), GuidebookEntry.EVIL));
+            roleInfo.putIfAbsent("noellesroles:vulture", new RoleInfo(RoleType.ROLE, Noellesroles.VULTURE.color(), GuidebookEntry.EVIL));
+            roleInfo.putIfAbsent("noellesroles:insane_killer", new RoleInfo(RoleType.ROLE, Noellesroles.THE_INSANE_DAMNED_PARANOID_KILLER_OF_DOOM_DEATH_DESTRUCTION_AND_WAFFLES.color(), GuidebookEntry.EVIL));
+
+            roleInfo.putIfAbsent("noellesroles:conductor", new RoleInfo(RoleType.ROLE, Noellesroles.CONDUCTOR.color(), GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("noellesroles:bartender", new RoleInfo(RoleType.ROLE, Noellesroles.BARTENDER.color(), GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("noellesroles:noisemaker", new RoleInfo(RoleType.ROLE, Noellesroles.NOISEMAKER.color(), GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("noellesroles:recaller", new RoleInfo(RoleType.ROLE, Noellesroles.RECALLER.color(), GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("noellesroles:coroner", new RoleInfo(RoleType.ROLE, Noellesroles.CORONER.color(), GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("noellesroles:voodoo", new RoleInfo(RoleType.ROLE, Noellesroles.VOODOO.color(), GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("noellesroles:mimic", new RoleInfo(RoleType.ROLE, Noellesroles.MIMIC.color(), GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("noellesroles:awesome_binglus", new RoleInfo(RoleType.ROLE, Noellesroles.AWESOME_BINGLUS.color(), GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("noellesroles:better_vigilante", new RoleInfo(RoleType.ROLE, Noellesroles.BETTER_VIGILANTE.color(), GuidebookEntry.GOOD));
+
+            roleInfo.putIfAbsent("noellesroles:tiny", new RoleInfo(RoleType.MODIFIER, Noellesroles.TINY.color(), GuidebookEntry.NONE));
+            roleInfo.putIfAbsent("noellesroles:chameleon", new RoleInfo(RoleType.MODIFIER, Noellesroles.CHAMELEON.color(), GuidebookEntry.NONE));
+            roleInfo.putIfAbsent("noellesroles:guesser", new RoleInfo(RoleType.MODIFIER, Noellesroles.GUESSER.color(), GuidebookEntry.NONE));
+        }
         if (FabricLoader.getInstance().isModLoaded("stupid_express")) {
             roleInfo.putIfAbsent("stupidexpress:amnesiac", new RoleInfo(RoleType.ROLE, SERoles.AMNESIAC.color(), GuidebookEntry.NEUTRAL));
             roleInfo.putIfAbsent("stupidexpress:arsonist", new RoleInfo(RoleType.ROLE, SERoles.ARSONIST.color(), GuidebookEntry.NEUTRAL));
+
             roleInfo.putIfAbsent("stupidexpress:necromancer", new RoleInfo(RoleType.ROLE, SERoles.NECROMANCER.color(), GuidebookEntry.EVIL));
             roleInfo.putIfAbsent("stupidexpress:avaricious", new RoleInfo(RoleType.ROLE, SERoles.AVARICIOUS.color(), GuidebookEntry.EVIL));
+
             roleInfo.putIfAbsent("stupidexpress:lovers", new RoleInfo(RoleType.MODIFIER, SEModifiers.LOVERS.color(), GuidebookEntry.NONE));
             roleInfo.putIfAbsent("stupidexpress:allergic", new RoleInfo(RoleType.MODIFIER, SEModifiers.ALLERGIC.color(), GuidebookEntry.NONE));
         }
+        if (FabricLoader.getInstance().isModLoaded("northernlights")) {
+            roleInfo.putIfAbsent("northernlights:diviner", new RoleInfo(RoleType.ROLE, 0x69F49A, GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("northernlights:confectionist", new RoleInfo(RoleType.ROLE, 0x2CAF02, GuidebookEntry.GOOD));
+            roleInfo.putIfAbsent("northernlights:medium", new RoleInfo(RoleType.ROLE, 0x9BFF3E, GuidebookEntry.GOOD));
+
+            roleInfo.putIfAbsent("northernlights:wench", new RoleInfo(RoleType.ROLE, 0xFFB820, GuidebookEntry.NEUTRAL));
+        }
+
         return roleInfo;
     }
 
@@ -53,7 +91,7 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
     private String displayedEntry;
     private ButtonComponent displayedEntryButton;
 
-    private final ScrollContainer<FlowLayout> roleButtonList = Containers.verticalScroll(Sizing.expand(40), Sizing.fill(), Containers.verticalFlow(Sizing.content(), Sizing.content())).scrollbar(ScrollContainer.Scrollbar.flat(Color.WHITE)).scrollbarThiccness(1).scrollStep(8);
+    private final ScrollContainer<FlowLayout> roleButtonList = Containers.verticalScroll(Sizing.expand(40), Sizing.fill(), Containers.verticalFlow(Sizing.content(), Sizing.content())).scrollbar(ScrollContainer.Scrollbar.flat(Color.WHITE)).scrollbarThiccness(1).scrollStep(12);
     private ScrollContainer<FlowLayout> currentRoleButtonList;
 
     private final FlowLayout informationFlow = Containers.verticalFlow(Sizing.expand(60), Sizing.fill());

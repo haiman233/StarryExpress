@@ -4,6 +4,8 @@
   "package": "org.aussiebox.starexpress.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "MoodMixin",
+    "ResetterMixin"
   ],
   "injectors": {
     "defaultRequire": 1
