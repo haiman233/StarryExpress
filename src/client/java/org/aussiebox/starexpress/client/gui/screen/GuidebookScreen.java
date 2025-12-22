@@ -11,6 +11,7 @@ import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.ScrollContainer;
 import io.wispforest.owo.ui.core.*;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import org.aussiebox.starexpress.StarryExpress;
@@ -55,7 +56,7 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
     private final ScrollContainer<FlowLayout> roleButtonList = Containers.verticalScroll(Sizing.expand(40), Sizing.fill(), Containers.verticalFlow(Sizing.content(), Sizing.content()));
     private ScrollContainer<FlowLayout> currentRoleButtonList;
 
-    private final FlowLayout informationFlow = Containers.verticalFlow(Sizing.expand(50), Sizing.fill());
+    private final FlowLayout informationFlow = Containers.verticalFlow(Sizing.expand(60), Sizing.fill());
     private FlowLayout currentInformationFlow;
 
     @Override
@@ -80,7 +81,8 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
         FlowLayout scrollLayout = (FlowLayout) roleDescription.children().getFirst();
         scrollLayout.child(Components.label(Component.empty()).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).id("role_description"));
 
-        this.currentInformationFlow.child(Components.label(Component.empty().withStyle(Style.EMPTY.withFont(StarryExpress.id("guidebook_heading")))).lineHeight(18).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(10)).id("role_name"));
+        this.currentInformationFlow.child(Components.label(Component.empty().withStyle(Style.EMPTY.withFont(StarryExpress.id("guidebook_heading")))).lineHeight(18).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(3)).id("role_name"));
+        this.currentInformationFlow.child(Components.label(Component.empty()).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(10)).id("role_title"));
         this.currentInformationFlow.child(roleDescription).id("role_description_container");
     }
 
@@ -145,10 +147,17 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
         newButton.setMessage(newButton.getMessage().copy().withColor(roleInfo.get(roleID).roleColor()));
 
         LabelComponent roleName = this.currentInformationFlow.childById(LabelComponent.class, "role_name");
+        LabelComponent roleTitle = this.currentInformationFlow.childById(LabelComponent.class, "role_title");
         LabelComponent roleDescription = this.currentInformationFlow.childById(LabelComponent.class, "role_description");
         roleName.text(Component.translatable("guidebook.role." + roleID).withColor(roleInfo.get(roleID).roleColor()).withStyle(Style.EMPTY.withFont(StarryExpress.id("guidebook_heading"))));
+        roleTitle.text(Component.literal("- ").append(Component.translatable("guidebook.role.title." + roleID)).append(" -").withColor(roleInfo.get(roleID).roleColor()));
         roleDescription.text(Component.translatable("guidebook.role.description." + roleID));
 
         this.displayedEntryButton = newButton;
+    }
+
+    @Override
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
     }
 }
