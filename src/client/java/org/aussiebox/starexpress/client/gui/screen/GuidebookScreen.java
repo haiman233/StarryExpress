@@ -65,7 +65,7 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
         setRoleButtonList(roleButtonList);
         setInformationFlow(informationFlow);
         root.surface(Surface.VANILLA_TRANSLUCENT);
-        root.child(getRoleButtonList()).padding(Insets.of(10)).margins(Insets.bottom(10));
+        root.child(getRoleButtonList()).padding(Insets.of(10));
         root.child(getInformationFlow()).padding(Insets.of(10));
     }
 
@@ -135,6 +135,7 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
 
         layout.child(rolesContainer).id("category.roles");
         layout.child(modifiersContainer).id("category.modifiers");
+        layout.child(Components.box(Sizing.fill(), Sizing.fixed(20)).color(Color.ofArgb(0x00000000)));
     }
 
     public void setDisplayedEntry(String roleID) {
