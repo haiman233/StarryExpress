@@ -29,7 +29,7 @@ public abstract class StarstruckHudMixin {
         if (gameWorldComponent.isRole(Minecraft.getInstance().player, StarryExpressRoles.STARSTRUCK)) {
             int drawY = context.guiHeight();
 
-            Component line = Component.translatable("tip.starstruck", StarryExpressClient.abilityBind.getTranslatedKeyMessage());
+            Component line = Component.translatable("tip.starexpress.starstruck", StarryExpressClient.abilityBind.getTranslatedKeyMessage());
 
             if (abilityComponent.cooldown > 0) {
                 line = Component.translatable("tip.starexpress.cooldown", abilityComponent.cooldown/20);

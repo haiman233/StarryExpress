@@ -1,5 +1,6 @@
 package org.aussiebox.starexpress.client.gui.screen;
 
+import dev.doctor4t.wathe.api.Role;
 import dev.doctor4t.wathe.api.WatheRoles;
 import io.wispforest.owo.ui.base.BaseOwoScreen;
 import io.wispforest.owo.ui.component.ButtonComponent;
@@ -12,16 +13,16 @@ import io.wispforest.owo.ui.container.ScrollContainer;
 import io.wispforest.owo.ui.core.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import org.agmas.noellesroles.Noellesroles;
+import org.agmas.harpymodloader.modifiers.HMLModifiers;
+import org.agmas.harpymodloader.modifiers.Modifier;
 import org.aussiebox.starexpress.StarryExpress;
-import org.aussiebox.starexpress.StarryExpressRoles;
 import org.aussiebox.starexpress.util.RoleInfo;
 import org.aussiebox.starexpress.util.RoleInfo.GuidebookEntry;
 import org.aussiebox.starexpress.util.RoleInfo.RoleType;
 import org.jetbrains.annotations.NotNull;
-import pro.fazeclan.river.stupid_express.SEModifiers;
 import pro.fazeclan.river.stupid_express.SERoles;
 
 import java.util.HashMap;
@@ -36,57 +37,35 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
 
     public Map<String, RoleInfo> roleInfo = new TreeMap<>();
     public Map<String, RoleInfo> getRoleInfo() {
-        roleInfo.putIfAbsent("wathe:civilian", new RoleInfo(RoleType.ROLE, WatheRoles.CIVILIAN.color(), GuidebookEntry.GOOD));
-        roleInfo.putIfAbsent("wathe:vigilante", new RoleInfo(RoleType.ROLE, WatheRoles.VIGILANTE.color(), GuidebookEntry.GOOD));
-        roleInfo.putIfAbsent("wathe:killer", new RoleInfo(RoleType.ROLE, WatheRoles.KILLER.color(), GuidebookEntry.EVIL));
 
-        roleInfo.putIfAbsent("starexpress:starstruck", new RoleInfo(RoleType.ROLE, StarryExpressRoles.STARSTRUCK.color(), GuidebookEntry.GOOD));
-
-        if (FabricLoader.getInstance().isModLoaded("noellesroles")) {
-            roleInfo.putIfAbsent("noellesroles:jester", new RoleInfo(RoleType.ROLE, Noellesroles.JESTER.color(), GuidebookEntry.EVIL));
-            roleInfo.putIfAbsent("noellesroles:executioner", new RoleInfo(RoleType.ROLE, Noellesroles.EXECUTIONER.color(), GuidebookEntry.EVIL));
-            roleInfo.putIfAbsent("noellesroles:morphling", new RoleInfo(RoleType.ROLE, Noellesroles.MORPHLING.color(), GuidebookEntry.EVIL));
-            roleInfo.putIfAbsent("noellesroles:phantom", new RoleInfo(RoleType.ROLE, Noellesroles.PHANTOM.color(), GuidebookEntry.EVIL));
-            roleInfo.putIfAbsent("noellesroles:swapper", new RoleInfo(RoleType.ROLE, Noellesroles.SWAPPER.color(), GuidebookEntry.EVIL));
-            roleInfo.putIfAbsent("noellesroles:vulture", new RoleInfo(RoleType.ROLE, Noellesroles.VULTURE.color(), GuidebookEntry.EVIL));
-            roleInfo.putIfAbsent("noellesroles:insane_killer", new RoleInfo(RoleType.ROLE, Noellesroles.THE_INSANE_DAMNED_PARANOID_KILLER_OF_DOOM_DEATH_DESTRUCTION_AND_WAFFLES.color(), GuidebookEntry.EVIL));
-
-            roleInfo.putIfAbsent("noellesroles:conductor", new RoleInfo(RoleType.ROLE, Noellesroles.CONDUCTOR.color(), GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("noellesroles:bartender", new RoleInfo(RoleType.ROLE, Noellesroles.BARTENDER.color(), GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("noellesroles:noisemaker", new RoleInfo(RoleType.ROLE, Noellesroles.NOISEMAKER.color(), GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("noellesroles:recaller", new RoleInfo(RoleType.ROLE, Noellesroles.RECALLER.color(), GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("noellesroles:coroner", new RoleInfo(RoleType.ROLE, Noellesroles.CORONER.color(), GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("noellesroles:voodoo", new RoleInfo(RoleType.ROLE, Noellesroles.VOODOO.color(), GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("noellesroles:mimic", new RoleInfo(RoleType.ROLE, Noellesroles.MIMIC.color(), GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("noellesroles:awesome_binglus", new RoleInfo(RoleType.ROLE, Noellesroles.AWESOME_BINGLUS.color(), GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("noellesroles:better_vigilante", new RoleInfo(RoleType.ROLE, Noellesroles.BETTER_VIGILANTE.color(), GuidebookEntry.GOOD));
-
-            roleInfo.putIfAbsent("noellesroles:tiny", new RoleInfo(RoleType.MODIFIER, Noellesroles.TINY.color(), GuidebookEntry.NONE));
-            roleInfo.putIfAbsent("noellesroles:chameleon", new RoleInfo(RoleType.MODIFIER, Noellesroles.CHAMELEON.color(), GuidebookEntry.NONE));
-            roleInfo.putIfAbsent("noellesroles:guesser", new RoleInfo(RoleType.MODIFIER, Noellesroles.GUESSER.color(), GuidebookEntry.NONE));
+        for (Role role : WatheRoles.ROLES) {
+            if (!Language.getInstance().has("guidebook.role." + role.identifier())) continue;
+            GuidebookEntry entry = GuidebookEntry.NONE;
+            if (role.isInnocent() && !role.canUseKiller()) entry = GuidebookEntry.GOOD;
+            if (!role.isInnocent() && !role.canUseKiller()) entry = GuidebookEntry.NEUTRAL;
+            if (!role.isInnocent() && role.canUseKiller()) entry = GuidebookEntry.EVIL;
+            roleInfo.putIfAbsent(String.valueOf(role.identifier()), new RoleInfo(role.identifier().getNamespace(), RoleType.ROLE, role.color(), entry));
         }
-        if (FabricLoader.getInstance().isModLoaded("stupid_express")) {
-            roleInfo.putIfAbsent("stupidexpress:amnesiac", new RoleInfo(RoleType.ROLE, SERoles.AMNESIAC.color(), GuidebookEntry.NEUTRAL));
-            roleInfo.putIfAbsent("stupidexpress:arsonist", new RoleInfo(RoleType.ROLE, SERoles.ARSONIST.color(), GuidebookEntry.NEUTRAL));
 
-            roleInfo.putIfAbsent("stupidexpress:necromancer", new RoleInfo(RoleType.ROLE, SERoles.NECROMANCER.color(), GuidebookEntry.EVIL));
-            roleInfo.putIfAbsent("stupidexpress:avaricious", new RoleInfo(RoleType.ROLE, SERoles.AVARICIOUS.color(), GuidebookEntry.EVIL));
-
-            roleInfo.putIfAbsent("stupidexpress:lovers", new RoleInfo(RoleType.MODIFIER, SEModifiers.LOVERS.color(), GuidebookEntry.NONE));
-            roleInfo.putIfAbsent("stupidexpress:allergic", new RoleInfo(RoleType.MODIFIER, SEModifiers.ALLERGIC.color(), GuidebookEntry.NONE));
-        }
-        if (FabricLoader.getInstance().isModLoaded("northernlights")) {
-            roleInfo.putIfAbsent("northernlights:diviner", new RoleInfo(RoleType.ROLE, 0x69F49A, GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("northernlights:confectionist", new RoleInfo(RoleType.ROLE, 0x2CAF02, GuidebookEntry.GOOD));
-            roleInfo.putIfAbsent("northernlights:medium", new RoleInfo(RoleType.ROLE, 0x9BFF3E, GuidebookEntry.GOOD));
-
-            roleInfo.putIfAbsent("northernlights:wench", new RoleInfo(RoleType.ROLE, 0xFFB820, GuidebookEntry.NEUTRAL));
+        for (Modifier mod : HMLModifiers.MODIFIERS) {
+            if (!Language.getInstance().has("guidebook.role." + mod.identifier())) continue;
+            roleInfo.putIfAbsent(String.valueOf(mod.identifier()), new RoleInfo(mod.identifier().getNamespace(), RoleType.MODIFIER, mod.color(), GuidebookEntry.NONE));
         }
 
         return roleInfo;
     }
 
-    public Map<String, ButtonComponent> roleButtons = new HashMap<>();
+    public Map<String, String> roleCreators = new HashMap<>();
+    public Map<String, String> getRoleCreators() {
+
+        if (FabricLoader.getInstance().isModLoaded("stupid_express")) {
+            roleCreators.putIfAbsent(String.valueOf(SERoles.AVARICIOUS.identifier()), "Sonicdude");
+        }
+
+        return roleCreators;
+    }
+
+    public Map<String, ButtonComponent> roleButtons = new TreeMap<>();
 
     private String displayedEntry;
     private ButtonComponent displayedEntryButton;
@@ -100,6 +79,7 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
     @Override
     protected void build(FlowLayout root) {
         getRoleInfo();
+        getRoleCreators();
         setRoleButtonList(roleButtonList);
         setInformationFlow(informationFlow);
         root.surface(Surface.VANILLA_TRANSLUCENT);
@@ -121,7 +101,8 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
         scrollLayout.child(Components.label(Component.empty()).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(50)).id("role_description"));
 
         this.currentInformationFlow.child(Components.label(Component.empty().withStyle(Style.EMPTY.withFont(StarryExpress.id("guidebook_heading")))).lineHeight(18).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(3)).id("role_name")).padding(Insets.horizontal(10));
-        this.currentInformationFlow.child(Components.label(Component.empty()).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(10)).id("role_title")).padding(Insets.horizontal(10));
+        this.currentInformationFlow.child(Components.label(Component.empty()).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(3)).id("role_title")).padding(Insets.horizontal(10));
+        this.currentInformationFlow.child(Components.label(Component.empty()).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(10)).id("role_credits")).padding(Insets.horizontal(10));
         this.currentInformationFlow.child(roleDescription).padding(Insets.horizontal(10)).id("role_description_container");
     }
 
@@ -148,7 +129,7 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
                             Component.translatable("guidebook.role." + roleID).withColor(0xFFFFFF).append("                                                                                         "),
                             buttonComponent -> setDisplayedEntry(roleID)
             ).renderer(ButtonComponent.Renderer.texture(StarryExpress.id("textures/empty.png"), 0, 0, 1, 1));
-            if (roleData.roleType() == RoleType.ROLE) {
+            if (roleData.type() == RoleType.ROLE) {
                 if (roleData.guidebookEntry() == GuidebookEntry.GOOD) {
                     goodRolesContainer.child(button.sizing(Sizing.content(), Sizing.content()).id(roleID));
                 }
@@ -158,7 +139,7 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
                 if (roleData.guidebookEntry() == GuidebookEntry.EVIL) {
                     evilRolesContainer.child(button.sizing(Sizing.content(), Sizing.content()).id(roleID));
                 }
-            } else if (roleData.roleType() == RoleType.MODIFIER) {
+            } else if (roleData.type() == RoleType.MODIFIER) {
                 modifiersContainer.child(button.sizing(Sizing.content(), Sizing.content()).id(roleID));
             }
             roleButtons.putIfAbsent(roleID, button);
@@ -184,13 +165,18 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
         }
 
         ButtonComponent newButton = roleButtons.get(roleID);
-        newButton.setMessage(newButton.getMessage().copy().withColor(roleInfo.get(roleID).roleColor()));
+        newButton.setMessage(newButton.getMessage().copy().withColor(roleInfo.get(roleID).color()));
 
         LabelComponent roleName = this.currentInformationFlow.childById(LabelComponent.class, "role_name");
         LabelComponent roleTitle = this.currentInformationFlow.childById(LabelComponent.class, "role_title");
+        LabelComponent roleCredits = this.currentInformationFlow.childById(LabelComponent.class, "role_credits");
         LabelComponent roleDescription = this.currentInformationFlow.childById(LabelComponent.class, "role_description");
-        roleName.text(Component.translatable("guidebook.role." + roleID).withColor(roleInfo.get(roleID).roleColor()).withStyle(Style.EMPTY.withFont(StarryExpress.id("guidebook_heading"))));
-        roleTitle.text(Component.literal("- ").append(Component.translatable("guidebook.role.title." + roleID)).append(" -").withColor(roleInfo.get(roleID).roleColor()));
+        roleName.text(Component.translatable("guidebook.role." + roleID).withColor(roleInfo.get(roleID).color()).withStyle(Style.EMPTY.withFont(StarryExpress.id("guidebook_heading"))));
+        roleTitle.text(Component.literal("- ").append(Component.translatable("guidebook.role.title." + roleID)).append(" -").withColor(roleInfo.get(roleID).color()));
+        roleCredits.text(Component.translatable("guidebook.role.credits").append(Component.translatable("guidebook.namespace." + roleInfo.get(roleID).namespace()).withStyle(Style.EMPTY.withItalic(true))).withColor(0xAAAAAA));
+        if (roleCreators.containsKey(roleID)) {
+            roleCredits.text(roleCredits.text().copy().append(Component.literal(" (")).withStyle(Style.EMPTY.withItalic(false)).append(Component.translatable("guidebook.role.creator")).append(roleCreators.get(roleID)).append(")"));
+        }
         roleDescription.text(Component.translatable("guidebook.role.description." + roleID));
 
         this.displayedEntryButton = newButton;
