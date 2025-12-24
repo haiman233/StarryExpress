@@ -2,6 +2,7 @@ package org.aussiebox.starexpress;
 
 import dev.doctor4t.wathe.cca.GameWorldComponent;
 import dev.doctor4t.wathe.game.GameConstants;
+import dev.doctor4t.wathe.game.GameFunctions;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -31,7 +32,9 @@ public class StarryExpress implements ModInitializer {
         ModBlockEntities.init();
         ModBlocks.init();
         ModItems.init();
+
         StarryExpressRoles.init();
+        StarryExpressModifiers.init();
 
         PayloadTypeRegistry.playC2S().register(AbilityC2SPacket.TYPE, AbilityC2SPacket.CODEC);
 
@@ -42,6 +45,8 @@ public class StarryExpress implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(AbilityC2SPacket.TYPE, (payload, context) -> {
             AbilityComponent abilityComponent = AbilityComponent.KEY.get(context.player());
             GameWorldComponent gameWorldComponent = GameWorldComponent.KEY.get(context.player().level());
+
+            if (!GameFunctions.isPlayerAliveAndSurvival(context.player())) return;
 
             if (gameWorldComponent.isRole(context.player(), StarryExpressRoles.STARSTRUCK) && abilityComponent.cooldown <= 0) {
                 abilityComponent.setCooldown(GameConstants.getInTicks(1, 30));

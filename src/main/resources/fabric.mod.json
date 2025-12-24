@@ -27,7 +27,8 @@
   "custom": {
     "cardinal-components": [
       "starexpress:ability",
-      "starexpress:starstruck"
+      "starexpress:starstruck",
+      "starexpress:allergic"
     ]
   },
 

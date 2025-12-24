@@ -8,6 +8,14 @@
   "announcement.goals.starexpress.starstruck": "Reveal your true power at the perfect moment.",
   "tip.starexpress.starstruck": "Use %s to go Starstruck!",
 
+  "announcement.modifier.allergic": "Allergic!",
+  "hud.allergic.hint": "Allergic",
+  "death_reason.starexpress.allergies": "mysterious allergies.",
+  "hud.allergic.doctor_heads_up": "Someone on the train may have allergic reactions- stay close!",
+  "hud.allergic.effect.instinct": "My eyesight feels sharper.",
+  "hud.allergic.effect.armor": "I feel unstoppable!",
+  "hud.allergic.effect.poison": "... Something's not right.",
+
   "guidebook.tooltip.open": "Open Guidebook",
   "guidebook.category.roles": "Roles",
       "guidebook.category.roles.good": "Good Roles",

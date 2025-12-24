@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "MoodMixin",
-    "ResetterMixin"
+    "ResetterMixin",
+    "allergic.AllergicEatMixin",
+    "allergic.AllergicGameFunctionsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

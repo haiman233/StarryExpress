@@ -15,6 +15,7 @@
   },
   "mixins": [
     "PlayerEntityMixin",
+    "allergic.AllergicInstinctMixin",
     "starstruck.StarstruckInstinctMixin"
   ]
 }
