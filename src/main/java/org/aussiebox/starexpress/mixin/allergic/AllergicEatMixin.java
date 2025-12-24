@@ -55,10 +55,11 @@ public abstract class AllergicEatMixin extends LivingEntity {
                 PlayerPoisonComponent.KEY.get(player).setPoisonTicks(Mth.clamp(poisonTicks - world.getRandom().nextIntBetweenInclusive(100, 300), 0, PlayerPoisonComponent.clampTime.getB()), player.getUUID());
             }
 
-            player.sendSystemMessage(
+            player.displayClientMessage(
                     Component.translatable(
                             "hud.allergic.effect.poison"
-                    ).withColor(StarryExpressModifiers.ALLERGIC.color())
+                    ).withColor(StarryExpressModifiers.ALLERGIC.color()),
+                    true
             );
         }
         if (random == 1) {

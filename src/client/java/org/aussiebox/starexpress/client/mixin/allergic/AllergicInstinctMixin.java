@@ -4,11 +4,11 @@ import dev.doctor4t.wathe.client.WatheClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import org.aussiebox.starexpress.cca.AllergicComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import pro.fazeclan.river.stupid_express.modifier.allergic.cca.AllergicComponent;
 
 import java.awt.*;
 

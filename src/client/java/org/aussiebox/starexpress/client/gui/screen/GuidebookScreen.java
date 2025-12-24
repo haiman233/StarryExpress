@@ -2,6 +2,8 @@ package org.aussiebox.starexpress.client.gui.screen;
 
 import dev.doctor4t.wathe.api.Role;
 import dev.doctor4t.wathe.api.WatheRoles;
+import dev.doctor4t.wathe.cca.GameWorldComponent;
+import dev.doctor4t.wathe.game.GameFunctions;
 import io.wispforest.owo.ui.base.BaseOwoScreen;
 import io.wispforest.owo.ui.component.ButtonComponent;
 import io.wispforest.owo.ui.component.Components;
@@ -12,10 +14,12 @@ import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.ScrollContainer;
 import io.wispforest.owo.ui.core.*;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.entity.player.Player;
 import org.agmas.harpymodloader.modifiers.HMLModifiers;
 import org.agmas.harpymodloader.modifiers.Modifier;
 import org.aussiebox.starexpress.StarryExpress;
@@ -23,7 +27,7 @@ import org.aussiebox.starexpress.util.RoleInfo;
 import org.aussiebox.starexpress.util.RoleInfo.GuidebookEntry;
 import org.aussiebox.starexpress.util.RoleInfo.RoleType;
 import org.jetbrains.annotations.NotNull;
-import pro.fazeclan.river.stupid_express.SERoles;
+import pro.fazeclan.river.stupid_express.constants.SERoles;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,6 +89,42 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
         root.surface(Surface.VANILLA_TRANSLUCENT);
         root.child(getRoleButtonList()).padding(Insets.of(10));
         root.child(getInformationFlow()).padding(Insets.of(10));
+
+        /// OPEN CURRENT ROLE IF POSSIBLE
+
+        Player player = Minecraft.getInstance().player;
+        GameWorldComponent game = GameWorldComponent.KEY.get(player.level());
+
+        if (!game.isRunning()) return;
+        if (!GameFunctions.isPlayerAliveAndSurvival(player)) return;
+        String roleID = game.getRole(player).identifier().toString();
+        if (!roleInfo.containsKey(roleID)) return;
+
+        setDisplayedEntry(roleID);
+
+        CollapsibleContainer roleContainer = this.currentRoleButtonList.childById(CollapsibleContainer.class, "category.roles");
+        CollapsibleContainer goodRoleContainer = this.currentRoleButtonList.childById(CollapsibleContainer.class, "category.roles.good");
+        CollapsibleContainer neutralRoleContainer = this.currentRoleButtonList.childById(CollapsibleContainer.class, "category.roles.neutral");
+        CollapsibleContainer evilRoleContainer = this.currentRoleButtonList.childById(CollapsibleContainer.class, "category.roles.evil");
+        CollapsibleContainer modifierContainer = this.currentRoleButtonList.childById(CollapsibleContainer.class, "category.modifiers");
+
+        if (roleInfo.get(roleID).guidebookEntry() == GuidebookEntry.GOOD) {
+            if (!roleContainer.expanded()) roleContainer.toggleExpansion();
+            if (!goodRoleContainer.expanded()) goodRoleContainer.toggleExpansion();
+        }
+        if (roleInfo.get(roleID).guidebookEntry() == GuidebookEntry.NEUTRAL) {
+            if (!roleContainer.expanded()) roleContainer.toggleExpansion();
+            if (!neutralRoleContainer.expanded()) neutralRoleContainer.toggleExpansion();
+        }
+        if (roleInfo.get(roleID).guidebookEntry() == GuidebookEntry.EVIL) {
+            if (!roleContainer.expanded()) roleContainer.toggleExpansion();
+            if (!evilRoleContainer.expanded()) evilRoleContainer.toggleExpansion();
+        }
+        if (roleInfo.get(roleID).type() == RoleType.MODIFIER) {
+            if (!modifierContainer.expanded()) modifierContainer.toggleExpansion();
+        }
+
+        this.currentRoleButtonList.scrollTo(roleButtons.get(roleID));
     }
 
     public FlowLayout getInformationFlow() {
@@ -98,7 +138,8 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
         ScrollContainer<FlowLayout> roleDescription = Containers.verticalScroll(Sizing.fill(), Sizing.fill(), Containers.verticalFlow(Sizing.content(), Sizing.content())).scrollbar(ScrollContainer.Scrollbar.flat(Color.WHITE)).scrollbarThiccness(1).scrollStep(8);
         FlowLayout scrollLayout = (FlowLayout) roleDescription.children().getFirst();
         scrollLayout.clearChildren();
-        scrollLayout.child(Components.label(Component.empty()).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(50)).id("role_description"));
+        scrollLayout.child(Components.label(Component.empty()).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).id("role_description"));
+        scrollLayout.child(Components.box(Sizing.fill(), Sizing.fixed(80)).color(Color.ofArgb(0x00000000)));
 
         this.currentInformationFlow.child(Components.label(Component.empty().withStyle(Style.EMPTY.withFont(StarryExpress.id("guidebook_heading")))).lineHeight(18).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(3)).id("role_name")).padding(Insets.horizontal(10));
         this.currentInformationFlow.child(Components.label(Component.empty()).horizontalTextAlignment(HorizontalAlignment.LEFT).sizing(Sizing.fill(), Sizing.content()).margins(Insets.bottom(3)).id("role_title")).padding(Insets.horizontal(10));
@@ -129,6 +170,7 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
                             Component.translatable("guidebook.role." + roleID).withColor(0xFFFFFF).append("                                                                                         "),
                             buttonComponent -> setDisplayedEntry(roleID)
             ).renderer(ButtonComponent.Renderer.texture(StarryExpress.id("textures/empty.png"), 0, 0, 1, 1));
+
             if (roleData.type() == RoleType.ROLE) {
                 if (roleData.guidebookEntry() == GuidebookEntry.GOOD) {
                     goodRolesContainer.child(button.sizing(Sizing.content(), Sizing.content()).id(roleID));
@@ -142,18 +184,19 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
             } else if (roleData.type() == RoleType.MODIFIER) {
                 modifiersContainer.child(button.sizing(Sizing.content(), Sizing.content()).id(roleID));
             }
+
             roleButtons.putIfAbsent(roleID, button);
         }
 
         FlowLayout rolesLayout = Containers.verticalFlow(Sizing.content(), Sizing.content());
-        rolesLayout.child(goodRolesContainer).id("category.roles.good");
-        rolesLayout.child(neutralRolesContainer).id("category.roles.neutral");
-        rolesLayout.child(evilRolesContainer).id("category.roles.evil");
+        rolesLayout.child(goodRolesContainer.id("category.roles.good"));
+        rolesLayout.child(neutralRolesContainer.id("category.roles.neutral"));
+        rolesLayout.child(evilRolesContainer.id("category.roles.evil"));
 
-        rolesContainer.child(rolesLayout).id("category.roles-layout");
+        rolesContainer.child(rolesLayout.id("category.roles-layout"));
 
-        layout.child(rolesContainer).id("category.roles");
-        layout.child(modifiersContainer).id("category.modifiers");
+        layout.child(rolesContainer.id("category.roles"));
+        layout.child(modifiersContainer.id("category.modifiers"));
         layout.child(Components.box(Sizing.fill(), Sizing.fixed(20)).color(Color.ofArgb(0x00000000)));
     }
 
