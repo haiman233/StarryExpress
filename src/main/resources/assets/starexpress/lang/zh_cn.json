@@ -5,13 +5,13 @@
   "block.starexpress.circuitweaver_plush": "量子毛绒玩具",
 
   "announcement.role.starexpress.starstruck": "星光",
-  "announcement.goals.starexpress.starstruck": "在关键时刻发挥你的真正实力!",
+  "announcement.goals.starexpress.starstruck": "在关键时刻发挥你的真正实力",
   "tip.starexpress.starstruck": "按下 %s 键闪耀星光",
 
   "announcement.modifier.allergic": "过敏患者",
   "hud.allergic.hint": "过敏",
   "death_reason.starexpress.allergies": "神秘的过敏症",
-  "hud.allergic.doctor_heads_up": "列车上可能有人出现过敏反应——请保持距离！",
+  "hud.allergic.doctor_heads_up": "列车上可能有人出现过敏反应——请保持距离",
   "hud.allergic.effect.instinct": "眼前的世界好像变得更加清晰了",
   "hud.allergic.effect.armor": "我感觉自己势不可挡",
   "hud.allergic.effect.poison": "... 我感觉不太对劲",
@@ -144,3 +144,4 @@
       "guidebook.role.title.northernlights:medium": "灵魂召唤师",
       "guidebook.role.description.northernlights:medium": "此身份的描述尚未编写"
 }
+
