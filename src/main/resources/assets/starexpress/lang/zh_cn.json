@@ -2,7 +2,7 @@
   "key.starexpress.ability": "能力",
   "tip.starexpress.cooldown": "能力在 %s 秒后可用",
 
-  "block.starexpress.circuitweaver_plush": "观星者毛绒玩具",
+  "block.starexpress.circuitweaver_plush": "量子毛绒玩具",
 
   "announcement.role.starexpress.starstruck": "星光",
   "announcement.goals.starexpress.starstruck": "在关键时刻发挥你的真正实力!",
@@ -46,8 +46,8 @@
       "guidebook.role.description.starexpress:starstruck": "一名爱好和平的乘客，拥有奇迹的能力，想要帮助他人，却经常不被理解显得格格不入。\n\n每间隔 90 秒，星光可以激活他的能力，获得 15 秒的透视本能与更快的移动速度。但这样会暴露自己的身份，将自己暴露在危险之中。\n\n每完成一项任务，星光能力的冷却时长将会减免 5 秒。",
   "guidebook.role.starexpress:allergic": "过敏患者",
       "guidebook.role.title.starexpress:allergic": "家庭遗传",
-      "guidebook.role.description.starexpress:allergic": "过敏患者的医疗记录证明，他有严重生理缺陷——无论是吃还是喝，都可能出现严重的副作用。\n\n根据指定的词条，随机选择过敏类型。\n\n在食用会导致过敏的食物或饮品后，过敏者将会有\n50% 的概率不会出现副作用\n16.67% 的概率获得 3 秒透视本能\n16.67% 的概率获得一次攻击免疫\n16.67% 的概率免疫毒药\n\n如果此项词条被开启，则随机一名乘客 33.33% 的概率感染过敏症状\n似乎恋人不会过敏",
-  
+      "guidebook.role.description.starexpress:allergic": "过敏患者的医疗记录证明，他有严重生理缺陷——无论是吃还是喝，都可能出现严重的副作用。\n\n过敏患者的过敏类型会在回合开始时随机选择\n\n在食用会导致过敏的食物或饮品后，过敏患者将会有\n50% 的概率不会出现任何效果\n16.67% 的概率获得 3 秒透视本能\n16.67% 的概率获得一次攻击免疫\n16.67% 的概率免疫毒药\n\n如果此项词条被开启，则有 33.33% 的概率随机一名乘客感染过敏症状",
+
   "guidebook.role.noellesroles:jester": "弄臣",
       "guidebook.role.title.noellesroles:jester": "流亡魔术师",
       "guidebook.role.description.noellesroles:jester": "弄臣来自一个遥远的王国，尽心尽力服侍了国王一辈子，他将表演此生最后一个载入史册的戏法。\n\n当弄臣被左轮击中时，他将进入狂暴模式，碾碎所有挡路的乘客，所经之处一片狼藉。\n\n幸运的是，弄臣无法自行进入狂暴模式，所以在考虑要枪杀哪位乘客时，要三思而后行。",
@@ -71,7 +71,7 @@
       "guidebook.role.description.noellesroles:the_insane_damned_paranoid_killer": "呃啊，请帮帮我，我脑海中一直有一个声音让我跳下火车。",
   "guidebook.role.noellesroles:conductor": "列车长",
       "guidebook.role.title.noellesroles:conductor": "钥匙管理员",
-      "guidebook.role.description.noellesroles:conductor": "列车长是这辆列车的司机，他有权进入所有乘客的房间。\n\n列车长持有万能钥匙，可以打开列车上所有的门。这把钥匙会在列车长死亡时掉落，杀手们也可捡起钥匙伪装自己，所以请务必要不惜一切的保管好钥匙。",
+      "guidebook.role.description.noellesroles:conductor": "列车长是这班列车的司机，他有权进入所有乘客的房间。\n\n列车长持有万能钥匙，可以打开列车上所有的门。这把钥匙会在列车长死亡时掉落，杀手们也可捡起钥匙伪装自己，所以请务必要不惜一切的保管好钥匙。\n\n当乘客人数少于 10 人时，列车长的钥匙会显示为撬锁器，不要被迷惑，你的眼睛可能会欺骗你，紧握你的左轮手枪准备随时开火。",
   "guidebook.role.noellesroles:bartender": "酒保",
       "guidebook.role.title.noellesroles:bartender": "意想不到的守护者",
       "guidebook.role.description.noellesroles:bartender": "这位酒保长期钻研调酒技艺，眼光犀利，能够看出被下过毒药的食物或饮品托盘。\n\n酒保每完成一项任务可以获得 50 金币，金币可用来购买去毒试剂，将其倒入食物或饮品托盘中，可让下一位食用的乘客免疫一次攻击。\n\n记住，杀手们也可以食用带有去毒试剂的食物或饮品，所以一定要给信任的人食用。",
@@ -105,6 +105,15 @@
   "guidebook.role.noellesroles:guesser": "猜测者",
       "guidebook.role.title.noellesroles:guesser": "狡猾的侦探",
       "guidebook.role.description.noellesroles:guesser": "猜测能力可以选择任何非杀手的乘客，并且尝试猜出他们的身份。如果猜测正确，被猜中身份的乘客会立刻倒地而亡。\n\n此词条只可生效与杀手阵营。",
+  "guidebook.role.noellesroles:trapper": "猎人",
+      "guidebook.role.title.noellesroles:trapper": "隐秘工程师",
+      "guidebook.role.description.noellesroles:trapper": "猎人登上了列车，他带了一些自制的机械玩意。\n\n猎人可以花费 100 金币购买一个身份陷阱，它会记录最先经过陷阱的三名乘客身份。\n\n身份陷阱不会记录乘客姓名，只会记录乘客身份，猎人仍然需要弄清楚是哪些乘客触发了陷阱与经过的先后顺序。\n\n陷阱检测到乘客后会发出哔哔声。\n\n如果放置陷阱的位置同时存在三名以上的乘客，陷阱会立即被摧毁，但是会记录超过三名以上乘客的信息。",
+  "guidebook.role.noellesroles:graverobber": "盗墓贼",
+      "guidebook.role.title.noellesroles:graverobber": "真理的追寻者",
+      "guidebook.role.description.noellesroles:graverobber": "盗墓贼从验尸官那里偷学了一些技能并扭曲了本意，变成了帮助自己杀戮的工具。\n\n盗墓贼可以像验尸官一样从尸体上获取信息\n\n此附加词条只能生效于杀手阵营。",
+  "guidebook.role.noellesroles:feather": "轻鸿",
+      "guidebook.role.title.noellesroles:feather": "身轻如燕",
+      "guidebook.role.description.noellesroles:feather": "精通空气动力学，总能巧妙的与人们擦肩而过。\n\n轻鸿不会与其他玩家相撞，并且下落速度变慢。\n\n这些独特的能力让轻鸿即使从列车侧面坠落，也能有时间自救。",
 
   "guidebook.role.stupid_express:amnesiac": "间谍",
       "guidebook.role.title.stupid_express:amnesiac": "隐藏真面目",
