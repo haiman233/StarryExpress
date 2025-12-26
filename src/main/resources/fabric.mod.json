@@ -28,8 +28,7 @@
     "cardinal-components": [
       "starexpress:ability",
       "starexpress:starstruck",
-      "starexpress:allergic",
-      "starexpress:server_config"
+      "starexpress:allergic"
     ]
   },
 

@@ -1,7 +1,6 @@
 package org.aussiebox.starexpress;
 
 import dev.doctor4t.wathe.cca.GameWorldComponent;
-import dev.doctor4t.wathe.game.GameConstants;
 import dev.doctor4t.wathe.game.GameFunctions;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -15,20 +14,18 @@ import net.minecraft.sounds.SoundSource;
 import org.aussiebox.starexpress.block.ModBlocks;
 import org.aussiebox.starexpress.block.entity.ModBlockEntities;
 import org.aussiebox.starexpress.cca.AbilityComponent;
-import org.aussiebox.starexpress.cca.ServerConfig;
 import org.aussiebox.starexpress.cca.StarstruckComponent;
+import org.aussiebox.starexpress.config.StarryExpressServerConfig;
 import org.aussiebox.starexpress.item.ModItems;
 import org.aussiebox.starexpress.packet.AbilityC2SPacket;
-import org.aussiebox.starexpress.packet.ChangeConfigOptionC2SPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Objects;
 
 public class StarryExpress implements ModInitializer {
 
     public static String MOD_ID = "starexpress";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final StarryExpressServerConfig CONFIG = StarryExpressServerConfig.createAndLoad();
 
     @Override
     public void onInitialize() {
@@ -42,7 +39,6 @@ public class StarryExpress implements ModInitializer {
         StarryExpressModifiers.init();
 
         PayloadTypeRegistry.playC2S().register(AbilityC2SPacket.TYPE, AbilityC2SPacket.CODEC);
-        PayloadTypeRegistry.playC2S().register(ChangeConfigOptionC2SPacket.TYPE, ChangeConfigOptionC2SPacket.CODEC);
 
         registerPackets();
     }
@@ -55,24 +51,14 @@ public class StarryExpress implements ModInitializer {
             if (!GameFunctions.isPlayerAliveAndSurvival(context.player())) return;
 
             if (gameWorldComponent.isRole(context.player(), StarryExpressRoles.STARSTRUCK) && abilityComponent.cooldown <= 0) {
-                abilityComponent.setCooldown(GameConstants.getInTicks(1, 30));
-                StarstruckComponent.KEY.get(context.player()).setTicks(GameConstants.getInTicks(0, 15));
+                abilityComponent.setCooldown(CONFIG.starstruckConfig.abilityCooldown() * 20);
+                StarstruckComponent.KEY.get(context.player()).setTicks(CONFIG.starstruckConfig.abilityDuration() * 20);
 
                 ServerLevel level = context.player().serverLevel();
                 level.playSound(null, BlockPos.containing(context.player().position()), SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.PLAYERS, 1.0F, 1.0F);
                 level.sendParticles(ParticleTypes.END_ROD, context.player().getX(), context.player().getY(), context.player().getZ(), 75,  0.5,  1.5,  0.5,  0.1);
             }
 
-        });
-
-        ServerPlayNetworking.registerGlobalReceiver(ChangeConfigOptionC2SPacket.TYPE, (payload, context) -> {
-            ServerConfig config = ServerConfig.KEY.get(context.player().level());
-
-            if (Objects.equals(payload.option(), "starstruckReduceCooldown")) {
-                config.setStarstruckReduceCooldown(payload.value());
-            }
-
-            config.sync();
         });
     }
 

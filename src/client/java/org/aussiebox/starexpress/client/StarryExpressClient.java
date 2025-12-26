@@ -3,6 +3,8 @@ package org.aussiebox.starexpress.client;
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.doctor4t.wathe.api.Role;
 import dev.doctor4t.wathe.cca.GameWorldComponent;
+import io.wispforest.owo.config.ui.ConfigScreen;
+import io.wispforest.owo.config.ui.ConfigScreenProviders;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -19,7 +21,6 @@ import org.aussiebox.starexpress.StarryExpress;
 import org.aussiebox.starexpress.StarryExpressRoles;
 import org.aussiebox.starexpress.block.ModBlocks;
 import org.aussiebox.starexpress.block.entity.ModBlockEntities;
-import org.aussiebox.starexpress.client.gui.screen.ServerConfigScreen;
 import org.aussiebox.starexpress.client.render.blockentity.PlushBlockEntityRenderer;
 import org.aussiebox.starexpress.packet.AbilityC2SPacket;
 import org.aussiebox.starexpress.packet.OpenConfigS2CPacket;
@@ -41,6 +42,7 @@ public class StarryExpressClient implements ClientModInitializer {
         }
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (abilityBind == null) return;
             if (abilityBind.isDown()) {
                 client.execute(() -> {
                     if (Minecraft.getInstance().player == null) return;
@@ -70,7 +72,9 @@ public class StarryExpressClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(OpenConfigS2CPacket.TYPE, (payload, context) -> {
 
             if (Minecraft.getInstance().player == null) return;
-            if (Minecraft.getInstance().player.hasPermissions(2)) Minecraft.getInstance().setScreen(new ServerConfigScreen());
+
+            ConfigScreen screen = (ConfigScreen) ConfigScreenProviders.get("starexpress");
+            if (Minecraft.getInstance().player.hasPermissions(2)) Minecraft.getInstance().setScreen(screen);
 
         });
     }

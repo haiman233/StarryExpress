@@ -1,16 +1,11 @@
 package org.aussiebox.starexpress;
 
 import dev.doctor4t.wathe.api.event.AllowPlayerDeath;
-import dev.doctor4t.wathe.cca.GameWorldComponent;
 import dev.doctor4t.wathe.cca.PlayerPoisonComponent;
 import dev.doctor4t.wathe.index.WatheSounds;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import org.agmas.harpymodloader.events.ModifierAssigned;
-import org.agmas.harpymodloader.events.ResetPlayerEvent;
 import org.agmas.harpymodloader.modifiers.HMLModifiers;
 import org.agmas.harpymodloader.modifiers.Modifier;
 import org.aussiebox.starexpress.cca.AllergicComponent;
@@ -68,32 +63,7 @@ public class StarryExpressModifiers {
             allergicComponent.setAllergyType(ThreadLocalRandom.current().nextBoolean() ? "food" : "drink");
             allergicComponent.sync();
 
-            allergicPlayer.sendSystemMessage(
-                    Component.translatable(
-                            "hud.allergic.notification",
-                            allergicComponent.getAllergyType()
-                    ).withColor(ALLERGIC.color()),
-                    true
-            );
-
-            var gameWorldComponent = GameWorldComponent.KEY.get(player.level());
-            for (ServerPlayer doctor :
-                    ((ServerLevel) allergicPlayer.level())
-                            .getPlayers(p -> gameWorldComponent.getRole(p).identifier().equals(ResourceLocation.parse("harpysimpleroles:doctor")))) {
-                doctor.sendSystemMessage(
-                        Component.translatable(
-                                "hud.allergic.doctor_heads_up" // This sends to players with a role from a different mod. I'm fucking genius.
-                        ).withColor(ALLERGIC.color()), // (Kid named genius:)
-                        true
-                );
-            }
         }));
-
-        ResetPlayerEvent.EVENT.register(player -> {
-            var component = AllergicComponent.KEY.get(player);
-            component.reset();
-            component.sync();
-        });
 
     }
 

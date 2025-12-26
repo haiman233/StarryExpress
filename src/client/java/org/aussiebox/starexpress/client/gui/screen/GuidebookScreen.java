@@ -24,6 +24,7 @@ import org.agmas.harpymodloader.component.WorldModifierComponent;
 import org.agmas.harpymodloader.modifiers.HMLModifiers;
 import org.agmas.harpymodloader.modifiers.Modifier;
 import org.aussiebox.starexpress.StarryExpress;
+import org.aussiebox.starexpress.config.StarryExpressServerConfig;
 import org.aussiebox.starexpress.util.RoleInfo;
 import org.aussiebox.starexpress.util.RoleInfo.GuidebookEntry;
 import org.aussiebox.starexpress.util.RoleInfo.RoleType;
@@ -32,6 +33,7 @@ import pro.fazeclan.river.stupid_express.constants.SERoles;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
@@ -253,7 +255,29 @@ public class GuidebookScreen extends BaseOwoScreen<FlowLayout> {
         if (roleCreators.containsKey(roleID)) {
             roleCredits.text(roleCredits.text().copy().append(Component.literal(" (")).withStyle(Style.EMPTY.withItalic(false)).append(Component.translatable("guidebook.role.creator")).append(roleCreators.get(roleID)).append(")"));
         }
-        roleDescription.text(Component.translatable("guidebook.role.description." + roleID));
+
+        StarryExpressServerConfig.AllergicConfig_ allergicConfig = StarryExpress.CONFIG.allergicConfig;
+        roleDescription.text(Component.translatable(
+                "guidebook.role.description." + roleID,
+
+                Component.translatable("guidebook.parameter.setting"),
+                StarryExpress.CONFIG.starstruckConfig.abilityCooldown(),
+                StarryExpress.CONFIG.starstruckConfig.abilityDuration(),
+                allergicConfig.nothingChance() + allergicConfig.instinctChance() + allergicConfig.armorChance() + allergicConfig.poisonChance(),
+                allergicConfig.nothingChance(),
+                allergicConfig.instinctChance(),
+                allergicConfig.armorChance(),
+                allergicConfig.poisonChance()
+        ));
+
+        if (Objects.equals(roleID, "starexpress:starstruck")) {
+            if (!StarryExpress.CONFIG.starstruckConfig.taskReducesCooldown()) {
+                roleDescription.text(roleDescription.text().copy().append(Component.translatable(
+                        "guidebook.role.description.starexpress:starstruck.cooldown_decreased",
+                        StarryExpress.CONFIG.starstruckConfig.taskCooldownReduction()
+                )));
+            }
+        }
 
         this.displayedEntryButton = newButton;
     }

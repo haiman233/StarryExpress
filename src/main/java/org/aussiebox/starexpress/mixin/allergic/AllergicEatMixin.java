@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.aussiebox.starexpress.StarryExpress;
 import org.aussiebox.starexpress.StarryExpressModifiers;
 import org.aussiebox.starexpress.cca.AllergicComponent;
 import org.jetbrains.annotations.NotNull;
@@ -18,8 +19,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Mixin(Player.class)
 public abstract class AllergicEatMixin extends LivingEntity {
@@ -46,8 +49,16 @@ public abstract class AllergicEatMixin extends LivingEntity {
         if (Objects.equals(allergy.getAllergyType(), "food") && (stack.getItem() instanceof CocktailItem)) return;
         if (Objects.equals(allergy.getAllergyType(), "drink") && !(stack.getItem() instanceof CocktailItem)) return;
 
-        int random = ThreadLocalRandom.current().nextInt(0, 6);
-        if (random == 0) {
+        List<String> effectList = new ArrayList<>();
+        effectList.addAll(Collections.nCopies(StarryExpress.CONFIG.allergicConfig.nothingChance(), "nothing"));
+        effectList.addAll(Collections.nCopies(StarryExpress.CONFIG.allergicConfig.instinctChance(), "instinct"));
+        effectList.addAll(Collections.nCopies(StarryExpress.CONFIG.allergicConfig.armorChance(), "armor"));
+        effectList.addAll(Collections.nCopies(StarryExpress.CONFIG.allergicConfig.poisonChance(), "poison"));
+
+        Collections.shuffle(effectList);
+        String effect = effectList.getFirst();
+
+        if (Objects.equals(effect, "poison")) {
             int poisonTicks = PlayerPoisonComponent.KEY.get(player).poisonTicks;
             if (poisonTicks == -1) {
                 PlayerPoisonComponent.KEY.get(player).setPoisonTicks(world.getRandom().nextIntBetweenInclusive(PlayerPoisonComponent.clampTime.getA(), PlayerPoisonComponent.clampTime.getB()), player.getUUID());
@@ -62,8 +73,8 @@ public abstract class AllergicEatMixin extends LivingEntity {
                     true
             );
         }
-        if (random == 1) {
-            allergy.setGlowTicks(60);
+        if (Objects.equals(effect, "instinct")) {
+            allergy.setGlowTicks(StarryExpress.CONFIG.allergicConfig.instinctDuration() * 20);
             allergy.sync();
 
             player.displayClientMessage(
@@ -73,7 +84,7 @@ public abstract class AllergicEatMixin extends LivingEntity {
                     true
             );
         }
-        if (random == 2) {
+        if (Objects.equals(effect, "armor")) {
             allergy.giveArmor();
 
             player.displayClientMessage(

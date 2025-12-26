@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.aussiebox.starexpress.StarryExpress;
 import org.aussiebox.starexpress.StarryExpressRoles;
 import org.aussiebox.starexpress.cca.StarstruckComponent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,7 +25,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     public float overrideMovementSpeed(float original) {
         Player player = (Player) (Object) this;
         if (GameWorldComponent.KEY.get(player.level()).isRole(player, StarryExpressRoles.STARSTRUCK) && StarstruckComponent.KEY.get(player).ticks > 0) {
-            return this.isSprinting() ? 0.15F : 0.12F;
+            if (!StarryExpress.CONFIG.starstruckConfig.abilityAffectsMovementSpeed()) return original;
+            return this.isSprinting() ? StarryExpress.CONFIG.starstruckConfig.abilitySprintSpeed() : StarryExpress.CONFIG.starstruckConfig.abilityWalkSpeed();
         } else {
             return original;
         }

@@ -3,6 +3,10 @@ package org.aussiebox.starexpress;
 import dev.doctor4t.wathe.api.Role;
 import dev.doctor4t.wathe.api.WatheRoles;
 import org.agmas.harpymodloader.Harpymodloader;
+import org.agmas.harpymodloader.events.ResetPlayerEvent;
+import org.aussiebox.starexpress.cca.AbilityComponent;
+import org.aussiebox.starexpress.cca.AllergicComponent;
+import org.aussiebox.starexpress.cca.StarstruckComponent;
 
 import java.util.HashMap;
 
@@ -28,6 +32,12 @@ public class StarryExpressRoles {
 
         /// STARSTRUCK
         Harpymodloader.setRoleMaximum(STARSTRUCK, 1);
+
+        ResetPlayerEvent.EVENT.register(player -> {
+            AbilityComponent.KEY.get(player).reset();
+            AllergicComponent.KEY.get(player).reset();
+            StarstruckComponent.KEY.get(player).reset();
+        });
 
     }
 
