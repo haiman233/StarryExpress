@@ -2,7 +2,7 @@
   "key.starexpress.ability": "能力",
   "tip.starexpress.cooldown": "能力在 %s 秒后可用",
 
-  "block.starexpress.circuitweaver_plush": "量子毛绒玩具",
+  "block.starexpress.circuitweaver_plush": "Circuitweaver毛绒玩具",
 
   "announcement.role.starexpress.starstruck": "星光",
   "announcement.goals.starexpress.starstruck": "在关键时刻发挥你的真正实力",
@@ -98,7 +98,7 @@
       "guidebook.role.description.noellesroles:awesome_binglus": "*用意念吹爆煎饼*\n\n\n\n是的，这只是一个携带着一堆便条的普通乘客，哈哈。",
   "guidebook.role.noellesroles:better_vigilante": "更优秀的义警",
       "guidebook.role.title.noellesroles:better_vigilante": "一个错误",
-      "guidebook.role.description.noellesroles:better_vigilante": "如果义警这么厉害，为什么还没出义警二呢？\n\n上车时携带了一枚炸弹而不是左轮手枪。\n\n我必须说 \"能力越大责任越大\" 或者诸如此类的传统说法，但我喜欢说实话，这位乘客将在回合开始的那一刻立即摧毁周围所有人。\n\n去替我杀掉几个白痴吧\n来自星光 <3",
+      "guidebook.role.description.noellesroles:better_vigilante": "如果义警这么厉害，为什么还没出义警二呢？\n\n上车时携带了一枚炸弹而不是左轮手枪。\n\n我必须说 \"能力越大责任越大\" 或者诸如此类的传统说法，但我喜欢说实话，这位乘客将在回合开始的那一刻立即摧毁周围所有人。\n\n去替我杀掉几个白痴吧\n来自Circuitweaver <3",
   "guidebook.role.noellesroles:tiny": "矮人",
       "guidebook.role.title.noellesroles:tiny": "我只是个宝宝...",
       "guidebook.role.description.noellesroles:tiny": "注意注意!游戏内的身高已被映射为您现实中的身高。\n\n是的，你现在变的矮小了，认命吧，傻瓜。",
@@ -133,6 +133,9 @@
   "guidebook.role.stupid_express:lovers": "恋人",
       "guidebook.role.title.stupid_express:lovers": "苦命鸳鸯",
       "guidebook.role.description.stupid_express:lovers": "恋人们是心灵相通的，如果其中一人陨落，另一人即会殉情而亡。\n\n恋人们总会成对出现，要么他们都所属平民阵营，要么所属不同阵营，据说两位杀手不可能会爱上彼此。\n\n如果这项词条被开启，则会选择两名乘客爱上彼此成为恋人。",
+  "guidebook.role.stupid_express:initiate": "初学者",
+      "guidebook.role.title.stupid_express:initiate": "复仇心理",
+      "guidebook.role.description.stupid_express:initiate": "初学者与一位宿敌共同登上了%1$s，他们唯一的愿望就是解决掉对方。\n\n初学者总是会出现两位，两位初学者必须互相竞争并赚取 200 金币来购买一把匕首击杀掉对方。\n在完成这项艰巨的杀人任务后，初学者将会随机成为新的杀手角色。\n\n如果其中一位初学者死于他人手下，或者是其他任何死因，则幸存的初学者将会随机变成杀手、中立角色或失忆患者(默认) (此选项可在愚蠢快车的服务端配置文件中设定)",
 
   "guidebook.role.northernlights:diviner": "占卜师",
       "guidebook.role.title.northernlights:diviner": "知晓真理",
