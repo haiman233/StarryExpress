@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2025 Stargazer (aka. AussieBox)
+Copyright (c) 2025 Circuitweaver (aka. AussieBox)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
