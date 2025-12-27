@@ -6,6 +6,7 @@
   "item.starexpress.tape": "Tape",
       "item.starexpress.tape.tooltip.1": "Use on another player to silence their pathetic cries.",
       "item.starexpress.tape.tooltip.2": "Silenced players will suffocate if left outside for too long.",
+      "subtitles.starexpress.item.tape_apply": "Something Applies Tape",
 
   "announcement.role.starexpress.starstruck": "Starstruck!",
   "announcement.goals.starexpress.starstruck": "Reveal your true power at the perfect moment.",
