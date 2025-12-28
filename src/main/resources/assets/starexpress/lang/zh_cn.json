@@ -26,10 +26,6 @@
   "hud.allergic.effect.armor": "我感觉自己势不可挡!",
   "hud.allergic.effect.poison": "... 我感觉不太对劲。",
 
-  "config.starexpress.server.category.roles": "身份/词条 配置",
-  "config.starexpress.server.starstruck.reduce_cooldown": "减少任务完成时的技能冷却时间",
-  "config.starexpress.server.starstruck.ability_duration": "技能持续时间",
-
   "guidebook.tooltip.open": "打开指南书",
   "guidebook.category.roles": "角色身份",
       "guidebook.category.roles.good": "平民阵营",
